@@ -21,6 +21,15 @@ def main():
  val='Тест'
  p = P(stylename=tablecontents,text=unicode(val,PWENC))
  tc.addElement(p)
+ tc = TableCell(valuetype="float", value=0.54)
+ tr.addElement(tc)
+ tc = TableCell(valuetype="string")
+ tr.addElement(tc)
+ val="05.12.2013"
+ p = P(stylename=tablecontents,text=val)
+ tc.addElement(p)
+
+ tr.addElement(tc)
  textdoc.spreadsheet.addElement(table)
  textdoc.save('./1.ods' )
 
