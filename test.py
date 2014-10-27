@@ -1,10 +1,12 @@
 #!/usr/bin/python
 #coding: utf8
 from odsmod import *
+from datetime import datetime
 def main():
  textdoc=initdoc()
  table,tablecontents=inittable(textdoc)
- row=('123','1234')
+ row=('123',u'Привет',0.5,1,datetime.now())
+ table=addrow(row,table,tablecontents)
  table=addrow(row,table,tablecontents)
  savetable(table,textdoc,'./1.ods')
 # table.addElement(tr)
