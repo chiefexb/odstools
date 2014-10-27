@@ -1,36 +1,28 @@
 #!/usr/bin/python
 #coding: utf8
+from odsmod import *
 def main():
- PWENC = "utf-8"
- from odf.opendocument import OpenDocumentSpreadsheet
- from odf.style import Style, TextProperties, ParagraphProperties, TableColumnProperties
- from odf.text import P
- from odf.table import Table, TableColumn, TableRow, TableCell
- textdoc = OpenDocumentSpreadsheet()
- # Create a style for the table content. One we can modify
- # later in the word processor.
- tablecontents = Style(name="Table Contents", family="paragraph")
- tablecontents.addElement(ParagraphProperties(numberlines="false", linenumber="0"))
- tablecontents.addElement(TextProperties(fontweight="bold"))
- textdoc.styles.addElement(tablecontents)
- table = Table( name='test' )
- tr = TableRow()
- table.addElement(tr)
- tc = TableCell(valuetype="string")
- tr.addElement(tc)
- val='Тест'
- p = P(stylename=tablecontents,text=unicode(val,PWENC))
- tc.addElement(p)
- tc = TableCell(valuetype="float", value=0.54)
- tr.addElement(tc)
- tc = TableCell(valuetype="string")
- tr.addElement(tc)
- val="05.12.2013"
- p = P(stylename=tablecontents,text=val)
- tc.addElement(p)
-
- tr.addElement(tc)
- textdoc.spreadsheet.addElement(table)
+ textdoc=initdoc()
+ table,tablecontents=inittable(textdoc)
+ row=('123','1234')
+ table=addrow(row,table,tablecontents)
+ savetable(table,textdoc,'./1.ods')
+# table.addElement(tr)
+# tc = TableCell(valuetype="string")
+# tr.addElement(tc)
+# val='Тест'
+# p = P(stylename=tablecontents,text=unicode(val,PWENC))
+# tc.addElement(p)
+# tc = TableCell(valuetype="float", value=0.54)
+# tr.addElement(tc)
+ #tc = TableCell(valuetype="string")
+# tr.addElement(tc)
+# val="05.12.2013"
+# p = P(stylename=tablecontents,text=val)
+# tc.addElement(p)
+#
+# tr.addElement(tc)
+# textdoc.spreadsheet.addElement(table)
  textdoc.save('./1.ods' )
 
 if __name__ == "__main__":
