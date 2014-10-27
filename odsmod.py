@@ -16,8 +16,13 @@ def inittable(textdoc):
  tablecontents.addElement(ParagraphProperties(numberlines="false", linenumber="0"))
  tablecontents.addElement(TextProperties(fontweight="bold"))
  textdoc.styles.addElement(tablecontents)
+ widewidth = Style(name="co1", family="table-column")
+ widewidth.addElement(TableColumnProperties(columnwidth="9", breakbefore="auto"))
+ textdoc.automaticstyles.addElement(widewidth)
+ textdoc.styles.addElement(widewidth)
  table = Table( name='test' )
- return table,tablecontents
+ table.addElement(TableColumn(stylename=widewidth, defaultcellstylename="ce1"))
+ return table,tablecontents,textdoc
 def addrow(row,table,tablecontents):
  tr = TableRow()
  table.addElement(tr)
@@ -27,9 +32,15 @@ def addrow(row,table,tablecontents):
    tr.addElement(tc)
    p = P(stylename=tablecontents,text=rr)
    tc.addElement(p)
-  elif  str(type(rr))=="<type 'float'>" or str(type(rr))=="<type 'int'>":
+  elif  str(type(rr))=="<type 'float'>" or str(type(rr))=="<type 'int'>" or str(type(rr))=="<class 'decimal.Decimal'>" :
    tc = TableCell(valuetype="float",value=rr)
    tr.addElement(tc)
+  elif str(type(rr))=="<type 'NoneType'>":
+   tc = TableCell(valuetype="string")
+   tr.addElement(tc)
+   p = P(stylename=tablecontents,text=unicode(' ',PWENC))
+   tc.addElement(p)
+
   elif str(type(rr))=="<type 'datetime.datetime'>":
    tc = TableCell(valuetype="string")
    tr.addElement(tc)
@@ -37,6 +48,7 @@ def addrow(row,table,tablecontents):
    tc.addElement(p)
 
   else:
+   print  str(type(rr)),rr
    tc = TableCell(valuetype="string")
    tr.addElement(tc)
    p = P(stylename=tablecontents,text=unicode(rr,PWENC))
